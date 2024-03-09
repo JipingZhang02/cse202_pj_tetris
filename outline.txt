@@ -1,0 +1,30 @@
+epoch:进化轮数
+gene_cnt:每轮保留的基因/个体个数
+evaluate_cnt：计算每个基因的评分时需要玩evaluate_cnt次
+l：玩一次要掉多少个方块
+
+
+
+PatternInit.py
+pattern(board,single_gene)->score
+get_patterns()->List[pattern]
+rand_init()->List[gene]
+pattern_match(board,List[pattern],gene)->punishment
+
+TetrisRule.py
+fall_down(board,block)->List[board]
+class BlockSequenceGenerator
+	gen_block(i)->block
+
+PlayTertris.py
+beam_search(board,List[block],beam_size,gene)->board
+play(BlockSequenceGenerator,beam_size,gene)->score
+
+Evolution.py
+selection_and_mutate(List[gene],score_func)->List[gene]
+evolve()->gene
+
+
+10
+1->40->1600->64000
+1->10->10->10
