@@ -16,8 +16,11 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--board_height",type=int,default=20)
     parser.add_argument("--board_width",type=int,default=10)
-    parser.add_argument("--score_clr_line",type=parse_list,default=[10])
+    parser.add_argument("--score_clr_line",type=parse_list,default=[1,2,3,4])
+    parser.add_argument("--window_size",type=int,default=3)
     parser.add_argument("--seed",type=int,default=42)
+    parser.add_argument("--beam_size",type=int,default=10)
+    parser.add_argument("--epoch",type=int,default=1000)
     return parser.parse_args()
 
 if __name__=="__main__":
