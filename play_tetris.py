@@ -4,6 +4,8 @@ from my_types import *
 import tetris_rule
 import patterns
 
+from tqdm import tqdm
+
 # def is_end(board:board_t,args)->bool:
 #     return (board[-1]==1).any()
 
@@ -40,17 +42,18 @@ def beam_search(board_with_score:board_t,window:List[block_id_t],beam_size:int,s
 def play(seed:int,board_w:int,board_h:int,max_blk_cnt:int,window_size:int,beam_size:int,score_clr_line,score_func,should_print=False)->int:
     board = np.zeros((board_h,board_w),dtype=int),0
     blk_generator = tetris_rule.RandBlkSeqGenerator(seed,window_size)
-    for _ in range(max_blk_cnt):
+    for _ in tqdm(range(max_blk_cnt),desc="playing..."):
         next_bd = beam_search(board,blk_generator.get_next_blocks(),beam_size,score_func=score_func,score_clr_line=score_clr_line)
         if next_bd is None:
             break
-        print(next_bd[0][::-1,:])
-        print("score: "+str(next_bd[1]))
-        print("\n\n")
+        if should_print:
+            print(next_bd[0][::-1,:])
+            print("score: "+str(next_bd[1]))
+            print("\n\n")
         board = next_bd
     return board[1]
 
 if __name__=="__main__":
-    ptrns,gene=patterns.get_patterns(None),patterns.rand_init(None)[0]
+    ptrns,gene=patterns.get_patterns(None),patterns.rand_init_gene(None)[0]
     score_func = lambda board:patterns.pattern_match(board,ptrns,gene)
     play(42,10,10,100,3,10,[1,2,3,4],score_func,True)

@@ -1,5 +1,6 @@
 from typing import *
 import copy
+import random
 import numpy as np
 from my_types import *
 from my_types import board_t
@@ -71,9 +72,18 @@ patterns.append(ShapePattern([[1,1,1],
 def get_patterns(args)->List[Pattern]:
     return patterns
 
-def rand_init(args)->List[gene_t]:
-    gene = [100,-50,-60,-70,-15,3,7,7,20,35]
-    return [gene]
+def rand_init_gene(args)->List[gene_t]:
+    # gene = [100,-50,-60,-70,-15,3,7,7,20,35]
+    patterns = get_patterns(args)
+    res = list()
+    for i in range(args.gene_cnt):
+        row = list()
+        # row.append(100)
+        for i in range(0,len(patterns)):
+            row.append(random.randint(-20,20))
+        res.append(row)
+    return res
+
 
 def pattern_match(board:board_t,patterns:List[Pattern],gene:gene_t)->int:
     res = 0
@@ -93,5 +103,5 @@ if __name__=="__main__":
         [0,0,0,0]
     ])
     board = (board,10)
-    print(pattern_match(board,get_patterns(None),rand_init(None)[0]))
+    print(pattern_match(board,get_patterns(None),rand_init_gene(None)[0]))
     # print(shape_ptrn.calculate_score(board,1))
